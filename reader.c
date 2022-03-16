@@ -18,7 +18,6 @@ unsigned sleep(unsigned sec);
 }*/
 void *get_raw_data(void *c)
 {
-    printf("enter reader\n");
     char *byte = (char*)c;
     FILE *fp= fopen("/proc/stat", "r");
     char line[80];
@@ -36,8 +35,6 @@ void *get_raw_data(void *c)
     }
     fclose(fp);
     pthread_mutex_unlock(&mux_reader);
-    printf("redaer go sleep\n");
-    printf("reader woke up\n");
 
     return 0;
 }

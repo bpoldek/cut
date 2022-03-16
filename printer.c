@@ -11,7 +11,6 @@ void *print_status(void *cpu)
         c++;
     } 
     pthread_mutex_unlock(&mux_reader);
-    sleep(1);
     return 0;
 }
 void *print_percent(void *cpu)
@@ -30,4 +29,5 @@ totald = Total - PrevTotal
 idled = Idle - PrevIdle
 
 CPU_Percentage = (totald - idled)/totald*/
+    return 0;
 }
