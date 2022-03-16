@@ -1,50 +1,73 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 #include <stdint.h>
 #include <string.h>
 #include "cpu.h"
 #include "printer.h"
 #include "reader.h"
+#include "analyzer.h"
+
+char raw_data[2048];
 
 unsigned sleep(unsigned sec);
 
-uint8_t get_num_of_cpu()
+pthread_mutex_t mux_reader, mux_analyzer, mux_printer;
+
+
+uint8_t get_num_cpu()
 {
-    uint8_t num =1 ;
-    char cpu[6] = {"cpu"};
-    char cpu_to[6] = {"cpu"}; 
-    char c_num;
     FILE *fp= fopen("/proc/stat", "r");
-    for (int i = 0; i < 6; i++)
+    char line[80];
+    uint8_t linesum=0;
+    char *pline;
+    while(fgets(line,sizeof(line),fp))
     {
-
-       /* c_num = itoa(i);
-        strncat(cpu_to,c_num,3);
-
-        fscanf(fp, "%s", cpu);
-        if(strcmp(cpu,cpu_to)==1)
-            num++;*/
+            pline = line;
+            if(*pline!='c')
+                break;
+            linesum++;           
     }
-    
-    return num;
+    fclose(fp);
+
+    return linesum;
 }
 int main()
-{
-    uint8_t num_of_cpu = get_num_of_cpu();
+{   
+    pthread_mutex_init(&mux_reader, NULL);
+    //pthread_mutex_init(&mux_analyzer, NULL);
+    //pthread_mutex_init(&mux_printer, NULL);
+    pthread_t reader, printer, analyser;
+    uint8_t cpu_num = get_num_cpu();
+    struct cpustatus cpu[cpu_num];
+    /*if(cpu_num!=0)
+    {
+        
+    }
+    else
+    {
+        printf("Bad number of CPU\n");
+        exit(1);
+    }*/
 
-    struct cpustatus cpu;
-
-    //Wstęp do wątku
-
-    /*pthread_t reader, analyser;
-    if(pthread_create(&reader,NULL,get_status(&cpu, "cpu0"),NULL)==-1)
-        printf("Nie mozna utworzyc watku reader");
-    //pthread_create(&analyser,NULL,get_status(&cpu, "cpu0"), NULL);*/
+    
     while (1)
     {   
-        get_status(&cpu, "cpu0");
-        print_status(&cpu, "cpu0");
-        sleep(1);
+        if(pthread_create(&reader,NULL,get_raw_data, raw_data)==-1)
+            printf("Nie mozna utworzyc watku reader");
+        if(pthread_create(&analyser,NULL,cpu_calc,&cpu)==-1)
+            printf("Nie mozna utworzyc watku printer");
+        if(pthread_create(&printer,NULL,print_status,&cpu)==-1)
+            printf("Nie mozna utworzyc watku printer");
+       sleep(1);
+
     }
+    if(pthread_join(reader, NULL)==-1)
+        printf("Blad zakonczenia watku");
+    if(pthread_join(printer, NULL)==-1)
+        printf("Blad zakonczenia watku");
+    pthread_mutex_destroy(&mux_reader);
+    //pthread_mutex_destroy(&mux_analyzer);
+    //pthread_mutex_destroy(&mux_printer);
     return 0; 
 }

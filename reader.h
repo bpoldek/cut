@@ -2,8 +2,13 @@
 #define READER_H_
 
 #include <stdio.h>
+#include <pthread.h>
+#include <stdint.h>
+#include <string.h>
 #include "cpu.h"
-
-void get_status(struct cpustatus *cpu, char*name);
+extern pthread_mutex_t mux_reader;
+extern char raw_data[2048];
+void *get_status(void *cpu);
+void *get_raw_data(void *c);
 
 #endif

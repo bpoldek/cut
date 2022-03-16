@@ -2,8 +2,12 @@
 #define PRINTER_H_
 
 #include <stdio.h>
+#include <pthread.h>
 #include "cpu.h"
 
-void print_status(struct cpustatus *cpu, char*name);
+#include "cpu.h"
+extern pthread_mutex_t mux_reader;
+void *print_status(void *cpu);
+void *print_percent(void *cpu);
 
 #endif
