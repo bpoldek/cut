@@ -3,9 +3,10 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <stdlib.h>
 #include "cpu.h"
-
-extern pthread_mutex_t mux_reader;
+unsigned sleep(unsigned sec);
+extern pthread_mutex_t mux_reader, mux_analyzer;
 void *print_status(void *cpu);
 void *print_percent(void *cpu);
 

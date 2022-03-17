@@ -13,6 +13,8 @@ stdio.h
 -
 pthread.h
 -
+stdlib.h
+-
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 
