@@ -1,4 +1,4 @@
-#include "reader.h"
+#include "../inc/reader.h"
 unsigned sleep(unsigned sec);
 /*void *get_status(void *c)
 { 
@@ -18,12 +18,13 @@ unsigned sleep(unsigned sec);
 }*/
 void *get_raw_data(void *c)
 {
+    pthread_mutex_lock(&mux_reader);
     char *byte = (char*)c;
     FILE *fp= fopen("/proc/stat", "r");
     char line[80];
     uint8_t linesum=0;
     char *pline;
-    pthread_mutex_lock(&mux_reader);
+    
     while(fgets(line,sizeof(line),fp))
     {
             pline = line;

@@ -2,6 +2,8 @@
     "files.associations": {
         "pthread.h": "c",
         "cstdio": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "reader.h": "c",
+        "limits": "c"
     }
 }

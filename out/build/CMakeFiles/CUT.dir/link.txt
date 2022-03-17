@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/CUT.dir/main.c.o  -o CUT  libCUT-lib.a -lpthread 

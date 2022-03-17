@@ -3,17 +3,16 @@
 #include <pthread.h>
 #include <stdint.h>
 #include <string.h>
-#include "cpu.h"
-#include "printer.h"
-#include "reader.h"
-#include "analyzer.h"
+#include "inc/cpu.h"
+#include "inc/printer.h"
+#include "inc/reader.h"
+#include "inc/analyzer.h"
 
 char raw_data[2048];
 
 unsigned sleep(unsigned sec);
 
 pthread_mutex_t mux_reader, mux_analyzer, mux_printer;
-
 
 uint8_t get_num_cpu()
 {
@@ -34,10 +33,8 @@ uint8_t get_num_cpu()
 }
 int main()
 {   
-    pthread_mutex_init(&mux_reader, NULL);
-    //pthread_mutex_init(&mux_analyzer, NULL);
-    //pthread_mutex_init(&mux_printer, NULL);
-    pthread_t reader, printer, analyser;
+    pthread_mutex_init(&mux_reader, NULL);;
+    pthread_t reader, printer, analyzer;
     uint8_t cpu_num = get_num_cpu();
     struct cpustatus cpu[cpu_num];
     /*if(cpu_num!=0)
@@ -49,20 +46,23 @@ int main()
         printf("Bad number of CPU\n");
         exit(1);
     }*/
-
+    system("clear");
     
     while (1)
     {   
         if(pthread_create(&reader,NULL,get_raw_data, raw_data)==-1)
             printf("Nie mozna utworzyc watku reader");
-        if(pthread_create(&analyser,NULL,cpu_calc,&cpu)==-1)
+        if(pthread_create(&analyzer,NULL,cpu_calc,&cpu)==-1)
             printf("Nie mozna utworzyc watku printer");
         if(pthread_create(&printer,NULL,print_status,&cpu)==-1)
             printf("Nie mozna utworzyc watku printer");
        sleep(1);
+       system("clear");
 
     }
     if(pthread_join(reader, NULL)==-1)
+        printf("Blad zakonczenia watku");
+    if(pthread_join(analyzer, NULL)==-1)
         printf("Blad zakonczenia watku");
     if(pthread_join(printer, NULL)==-1)
         printf("Blad zakonczenia watku");

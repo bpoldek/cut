@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCUT-lib.a  CMakeFiles/CUT-lib.dir/src/analyzer.c.o CMakeFiles/CUT-lib.dir/src/printer.c.o CMakeFiles/CUT-lib.dir/src/reader.c.o
+/usr/bin/ranlib libCUT-lib.a

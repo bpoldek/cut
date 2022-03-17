@@ -1,6 +1,22 @@
 {
     "tasks": [
         {
+            "type": "shell",
+            "label": "cmake",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/out/build"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Cmake build option"
+        },
+        {
             "type": "cppbuild",
             "label": "C/C++: gcc kompiluj aktywny plik",
             "command": "/usr/bin/gcc",
@@ -21,7 +37,7 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
             "detail": "Zadanie wygenerowane przez debuger."
         }

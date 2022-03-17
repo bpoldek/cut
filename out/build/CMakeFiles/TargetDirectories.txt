@@ -1,0 +1,4 @@
+/home/bpolko/CUT/cut/out/build/CMakeFiles/rebuild_cache.dir
+/home/bpolko/CUT/cut/out/build/CMakeFiles/edit_cache.dir
+/home/bpolko/CUT/cut/out/build/CMakeFiles/CUT.dir
+/home/bpolko/CUT/cut/out/build/CMakeFiles/CUT-lib.dir
