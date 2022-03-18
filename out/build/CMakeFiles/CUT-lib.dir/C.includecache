@@ -6,19 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/bpolko/CUT/cut/inc/cpu.h
-
-/home/bpolko/CUT/cut/inc/printer.h
+/home/bpolko/CUT/cut/inc/analyzer.h
 stdio.h
 -
 pthread.h
 -
-stdlib.h
--
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 
-/home/bpolko/CUT/cut/src/printer.c
-../inc/printer.h
-/home/bpolko/CUT/cut/inc/printer.h
+/home/bpolko/CUT/cut/inc/cpu.h
+
+/home/bpolko/CUT/cut/src/analyzer.c
+../inc/analyzer.h
+/home/bpolko/CUT/cut/inc/analyzer.h
 
