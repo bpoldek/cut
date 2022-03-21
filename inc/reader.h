@@ -6,7 +6,9 @@
 #include <stdint.h>
 #include <string.h>
 #include "cpu.h"
-extern pthread_mutex_t mux_reader;
+#include "buffer.h"
+extern pthread_mutex_t mux_reader, mux_analyzer;
+extern struct circular_buffer cpu_buffer;
 extern char raw_data[2048];
 void *get_status(void *cpu);
 void *get_raw_data(void *c);

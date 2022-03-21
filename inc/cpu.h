@@ -1,6 +1,6 @@
 #ifndef CPU_H_
 #define CPU_H_
-struct cpustatus{
+typedef struct cpustatus{
     char cpu_name[6];
     unsigned long cpu_user;
     unsigned long cpu_nice;
@@ -9,5 +9,5 @@ struct cpustatus{
     unsigned long cpu_iowait;
     unsigned long cpu_irq;
     unsigned long cpu_softirq;
-};
+}cpustatus;
 #endif

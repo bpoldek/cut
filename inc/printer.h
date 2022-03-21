@@ -8,6 +8,6 @@
 unsigned sleep(unsigned sec);
 extern pthread_mutex_t mux_reader, mux_analyzer;
 void *print_status(void *cpu);
-void *print_percent(void *cpu);
+void *print_percent(double per);
 
 #endif

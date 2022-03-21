@@ -3,23 +3,25 @@
 void* cpu_calc(void *cpu)
 { 
     while (1)
-    {
+    {   
+        struct cpustatus prev;
+        struct cpustatus *act = (struct cpustatus*)cpu;
         pthread_mutex_lock(&mux_reader);
-        pthread_mutex_lock(&mux_analyzer);
-        //char * ptr = &raw_data[0]; 
-        struct cpustatus *c = (struct cpustatus*)cpu;
-        parse_stat(c);
+        sem_wait(&buffEmpty);
+        parse_stat(act);
+        cb_push_back(&cpu_buffer, act);
+        sem_post(&buffFull);
         pthread_mutex_unlock(&mux_reader);
+        sem_wait(&buffFull);
         pthread_mutex_lock(&mux_reader);
-        parse_stat(c);
+        cb_pop_front(&cpu_buffer, act);
+        cb_pop_front(&cpu_buffer, &prev);
+        percent = calculate_load(&prev, act);
+        sem_post(&buffEmpty);
         pthread_mutex_unlock(&mux_reader);
-        pthread_mutex_unlock(&mux_analyzer);   
     }
-    
-
     return 0;
 }
-
 void parse_stat(struct cpustatus *c) 
 {
     char * ptr = &raw_data[0];
@@ -42,4 +44,22 @@ void parse_stat(struct cpustatus *c)
             if(i<5)
                 ptr++;
         }
+}
+double calculate_load(struct cpustatus *prev, struct cpustatus *cur) 
+{
+    int idle_prev = (prev->cpu_idle) + (prev->cpu_iowait);
+    int idle_cur = (cur->cpu_idle) + (cur->cpu_iowait);
+
+    int nidle_prev = (prev->cpu_user) + (prev->cpu_nice) + (prev->cpu_system) + (prev->cpu_irq) + (prev->cpu_softirq);
+    int nidle_cur = (cur->cpu_user) + (cur->cpu_nice) + (cur->cpu_system) + (cur->cpu_irq) + (cur->cpu_softirq);
+
+    int total_prev = idle_prev + nidle_prev;
+    int total_cur = idle_cur + nidle_cur;
+
+    double totald = (double) total_cur - (double) total_prev;
+    double idled = (double) idle_cur - (double) idle_prev;
+
+    double cpu_perc = (1000 * (totald - idled) / totald + 1) / 10;
+
+    return cpu_perc;
 }

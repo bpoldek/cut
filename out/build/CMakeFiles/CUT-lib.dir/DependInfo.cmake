@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/bpolko/CUT/cut/src/analyzer.c" "/home/bpolko/CUT/cut/out/build/CMakeFiles/CUT-lib.dir/src/analyzer.c.o"
+  "/home/bpolko/CUT/cut/src/buffer.c" "/home/bpolko/CUT/cut/out/build/CMakeFiles/CUT-lib.dir/src/buffer.c.o"
   "/home/bpolko/CUT/cut/src/printer.c" "/home/bpolko/CUT/cut/out/build/CMakeFiles/CUT-lib.dir/src/printer.c.o"
   "/home/bpolko/CUT/cut/src/reader.c" "/home/bpolko/CUT/cut/out/build/CMakeFiles/CUT-lib.dir/src/reader.c.o"
   )

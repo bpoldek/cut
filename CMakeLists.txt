@@ -7,6 +7,7 @@ set(LIB
     src/analyzer.c
     src/printer.c
     src/reader.c
+    src/buffer.c
 )
 add_library(${PROJECT_NAME}-lib STATIC ${LIB})
 
@@ -15,7 +16,7 @@ add_executable(${PROJECT_NAME} main.c)
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 find_package (Threads REQUIRED)
 
-set(COMPILE_FLAGS PRIVATE -pthread -Wall -Wextra -Werror)
+set(COMPILE_FLAGS PRIVATE -pthread -Wall -Wextra )
 
 add_compile_options(${PROJECT_NAME} ${COMPILE_FLAGS})
 target_compile_options(${PROJECT_NAME} ${COMPILE_FLAGS})

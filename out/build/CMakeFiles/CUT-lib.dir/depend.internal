@@ -3,13 +3,19 @@
 
 CMakeFiles/CUT-lib.dir/src/analyzer.c.o
  /home/bpolko/CUT/cut/inc/analyzer.h
+ /home/bpolko/CUT/cut/inc/buffer.h
  /home/bpolko/CUT/cut/inc/cpu.h
  /home/bpolko/CUT/cut/src/analyzer.c
+CMakeFiles/CUT-lib.dir/src/buffer.c.o
+ /home/bpolko/CUT/cut/inc/buffer.h
+ /home/bpolko/CUT/cut/inc/cpu.h
+ /home/bpolko/CUT/cut/src/buffer.c
 CMakeFiles/CUT-lib.dir/src/printer.c.o
  /home/bpolko/CUT/cut/inc/cpu.h
  /home/bpolko/CUT/cut/inc/printer.h
  /home/bpolko/CUT/cut/src/printer.c
 CMakeFiles/CUT-lib.dir/src/reader.c.o
+ /home/bpolko/CUT/cut/inc/buffer.h
  /home/bpolko/CUT/cut/inc/cpu.h
  /home/bpolko/CUT/cut/inc/reader.h
  /home/bpolko/CUT/cut/src/reader.c

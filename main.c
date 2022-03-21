@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
+#include <semaphore.h>
+#include "inc/buffer.h"
 #include "inc/cpu.h"
 #include "inc/printer.h"
 #include "inc/reader.h"
@@ -13,19 +15,16 @@
 
 char raw_data[2048];
 
+double percent;
+
+sem_t buffEmpty;
+sem_t buffFull;
+
 unsigned sleep(unsigned sec);
 
 pthread_mutex_t mux_reader, mux_analyzer, mux_printer;
 
-/*struct cpu_buffer
-{
-    struct cpustatus cpu;
-    struct cpustatus *head;
-    struct cpustatus *tail;
-    uint8_t size;
-    bool empty;
-    bool full;
-};*/
+circular_buffer cpu_buffer;
 uint8_t get_num_cpu()
 {
     FILE *fp= fopen("/proc/stat", "r");
@@ -45,21 +44,29 @@ uint8_t get_num_cpu()
 }
 int main()
 {   
+    sem_init(&buffEmpty,0,20);
+    sem_init(&buffFull,0,0);
     pthread_mutex_init(&mux_reader, NULL);
     pthread_mutex_init(&mux_analyzer, NULL);;
     pthread_t reader, printer, analyzer;
     uint8_t cpu_num = get_num_cpu();
-    struct cpustatus cpu[cpu_num][BUFF_SIZE];
+    struct cpustatus cpu[cpu_num];
     
+    
+
+    cb_init(&cpu_buffer, 20,sizeof(cpustatus));
+
     system("clear");
     
     if(pthread_create(&reader,NULL,get_raw_data, &raw_data)==-1)
         printf("Nie mozna utworzyc watku reader");
-    if(pthread_create(&analyzer,NULL,cpu_calc,&cpu[0][0])==-1)
+    if(pthread_create(&analyzer,NULL,cpu_calc,&cpu)==-1)
         printf("Nie mozna utworzyc watku printer");
-    if(pthread_create(&printer,NULL,print_status,&cpu)==-1)
+    if(pthread_create(&printer,NULL,print_percent,&percent)==-1)
         printf("Nie mozna utworzyc watku printer");
-       system("clear");
+       
+    system("clear");
+
     if(pthread_join(reader, NULL)==-1)
         printf("Blad zakonczenia watku");
     if(pthread_join(analyzer, NULL)==-1)
@@ -68,6 +75,9 @@ int main()
         printf("Blad zakonczenia watku");
     pthread_mutex_destroy(&mux_reader);
     pthread_mutex_destroy(&mux_analyzer);
+    sem_destroy(&buffEmpty);
+    sem_destroy(&buffFull);
+    cb_free(&cpu_buffer);
     //pthread_mutex_destroy(&mux_printer);
     return 0; 
 }

@@ -96,11 +96,25 @@ CMakeFiles/CUT-lib.dir/src/reader.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CUT-lib.dir/src/reader.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/bpolko/CUT/cut/src/reader.c -o CMakeFiles/CUT-lib.dir/src/reader.c.s
 
+CMakeFiles/CUT-lib.dir/src/buffer.c.o: CMakeFiles/CUT-lib.dir/flags.make
+CMakeFiles/CUT-lib.dir/src/buffer.c.o: ../../src/buffer.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/bpolko/CUT/cut/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/CUT-lib.dir/src/buffer.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/CUT-lib.dir/src/buffer.c.o   -c /home/bpolko/CUT/cut/src/buffer.c
+
+CMakeFiles/CUT-lib.dir/src/buffer.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CUT-lib.dir/src/buffer.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/bpolko/CUT/cut/src/buffer.c > CMakeFiles/CUT-lib.dir/src/buffer.c.i
+
+CMakeFiles/CUT-lib.dir/src/buffer.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CUT-lib.dir/src/buffer.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/bpolko/CUT/cut/src/buffer.c -o CMakeFiles/CUT-lib.dir/src/buffer.c.s
+
 # Object files for target CUT-lib
 CUT__lib_OBJECTS = \
 "CMakeFiles/CUT-lib.dir/src/analyzer.c.o" \
 "CMakeFiles/CUT-lib.dir/src/printer.c.o" \
-"CMakeFiles/CUT-lib.dir/src/reader.c.o"
+"CMakeFiles/CUT-lib.dir/src/reader.c.o" \
+"CMakeFiles/CUT-lib.dir/src/buffer.c.o"
 
 # External object files for target CUT-lib
 CUT__lib_EXTERNAL_OBJECTS =
@@ -108,9 +122,10 @@ CUT__lib_EXTERNAL_OBJECTS =
 libCUT-lib.a: CMakeFiles/CUT-lib.dir/src/analyzer.c.o
 libCUT-lib.a: CMakeFiles/CUT-lib.dir/src/printer.c.o
 libCUT-lib.a: CMakeFiles/CUT-lib.dir/src/reader.c.o
+libCUT-lib.a: CMakeFiles/CUT-lib.dir/src/buffer.c.o
 libCUT-lib.a: CMakeFiles/CUT-lib.dir/build.make
 libCUT-lib.a: CMakeFiles/CUT-lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bpolko/CUT/cut/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C static library libCUT-lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/bpolko/CUT/cut/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libCUT-lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/CUT-lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CUT-lib.dir/link.txt --verbose=$(VERBOSE)
 

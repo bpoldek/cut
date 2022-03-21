@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/CUT-lib.dir/src/analyzer.c.o"
+  "CMakeFiles/CUT-lib.dir/src/buffer.c.o"
   "CMakeFiles/CUT-lib.dir/src/printer.c.o"
   "CMakeFiles/CUT-lib.dir/src/reader.c.o"
   "libCUT-lib.a"

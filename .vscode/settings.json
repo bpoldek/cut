@@ -4,6 +4,7 @@
         "cstdio": "c",
         "stdio.h": "c",
         "reader.h": "c",
-        "limits": "c"
+        "limits": "c",
+        "buffer.h": "c"
     }
 }

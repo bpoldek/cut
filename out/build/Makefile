@@ -190,6 +190,33 @@ src/analyzer.c.s:
 	$(MAKE) -f CMakeFiles/CUT-lib.dir/build.make CMakeFiles/CUT-lib.dir/src/analyzer.c.s
 .PHONY : src/analyzer.c.s
 
+src/buffer.o: src/buffer.c.o
+
+.PHONY : src/buffer.o
+
+# target to build an object file
+src/buffer.c.o:
+	$(MAKE) -f CMakeFiles/CUT-lib.dir/build.make CMakeFiles/CUT-lib.dir/src/buffer.c.o
+.PHONY : src/buffer.c.o
+
+src/buffer.i: src/buffer.c.i
+
+.PHONY : src/buffer.i
+
+# target to preprocess a source file
+src/buffer.c.i:
+	$(MAKE) -f CMakeFiles/CUT-lib.dir/build.make CMakeFiles/CUT-lib.dir/src/buffer.c.i
+.PHONY : src/buffer.c.i
+
+src/buffer.s: src/buffer.c.s
+
+.PHONY : src/buffer.s
+
+# target to generate assembly for a file
+src/buffer.c.s:
+	$(MAKE) -f CMakeFiles/CUT-lib.dir/build.make CMakeFiles/CUT-lib.dir/src/buffer.c.s
+.PHONY : src/buffer.c.s
+
 src/printer.o: src/printer.c.o
 
 .PHONY : src/printer.o
@@ -260,6 +287,9 @@ help:
 	@echo "... src/analyzer.o"
 	@echo "... src/analyzer.i"
 	@echo "... src/analyzer.s"
+	@echo "... src/buffer.o"
+	@echo "... src/buffer.i"
+	@echo "... src/buffer.s"
 	@echo "... src/printer.o"
 	@echo "... src/printer.i"
 	@echo "... src/printer.s"

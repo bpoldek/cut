@@ -19,3 +19,14 @@ void *print_status(void *cpu)
     }
     return 0;
 }
+void *print_percent(double per)
+{   
+    while(1)
+    {
+        printf("CPU: %lf%%\n", per);
+        sleep(1);
+        system("clear");
+    }
+
+    return 0;
+}
