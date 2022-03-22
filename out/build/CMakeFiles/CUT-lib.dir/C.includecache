@@ -6,18 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/bpolko/CUT/cut/inc/analyzer.h
-stdio.h
--
-pthread.h
--
-semaphore.h
--
-cpu.h
-/home/bpolko/CUT/cut/inc/cpu.h
-buffer.h
-/home/bpolko/CUT/cut/inc/buffer.h
-
 /home/bpolko/CUT/cut/inc/buffer.h
 stdio.h
 -
@@ -33,12 +21,14 @@ assert.h
 -
 stdbool.h
 -
+semaphore.h
+-
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 
 /home/bpolko/CUT/cut/inc/cpu.h
 
-/home/bpolko/CUT/cut/src/analyzer.c
-../inc/analyzer.h
-/home/bpolko/CUT/cut/inc/analyzer.h
+/home/bpolko/CUT/cut/src/buffer.c
+../inc/buffer.h
+/home/bpolko/CUT/cut/inc/buffer.h
 

@@ -8,6 +8,7 @@
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <semaphore.h>
 #include "cpu.h"
 
 typedef struct circular_buffer
@@ -18,7 +19,9 @@ typedef struct circular_buffer
     size_t count;     // number of items in the buffer
     size_t sz;        // size of each item in the buffer
     cpustatus *head;  // pointer to head
-    cpustatus *tail;  // pointer to tail    
+    cpustatus *tail;  // pointer to tail
+    sem_t buffEmpty;
+    sem_t buffFull;    
 } circular_buffer;
 
 void cb_init(circular_buffer *cb, size_t capacity, size_t sz);

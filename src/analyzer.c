@@ -6,45 +6,31 @@ void* cpu_calc(void *cpu)
     {   
         struct cpustatus prev;
         struct cpustatus *act = (struct cpustatus*)cpu;
+
+        sem_wait(&cpu_buffer.buffFull);
+        sem_wait(&fin);
+        pthread_mutex_lock(&mux_analyzer); 
         pthread_mutex_lock(&mux_reader);
-        sem_wait(&buffEmpty);
-        parse_stat(act);
-        cb_push_back(&cpu_buffer, act);
-        sem_post(&buffFull);
-        pthread_mutex_unlock(&mux_reader);
-        sem_wait(&buffFull);
-        pthread_mutex_lock(&mux_reader);
+        
+       // printf("act: %ld adress: %p\n",cpu_buffer.tail->cpu_user, cpu_buffer.tail);
+        //cb_pop_front(&cpu_buffer, &prev);
+        
+        memcpy(&prev,act,sizeof(struct cpustatus));
         cb_pop_front(&cpu_buffer, act);
-        cb_pop_front(&cpu_buffer, &prev);
-        percent = calculate_load(&prev, act);
-        sem_post(&buffEmpty);
+        //printf("prev: %ld adress: %p\n",cpu_buffer.tail->cpu_user, cpu_buffer.tail);
+        //printf("In analyzer: %d ,act: %ld prev: %ld\n", counter, act->cpu_user, prev.cpu_user );
+        percent[counter] = calculate_load(&prev, act);
+        printf("Percent %d, %lf\n",counter, percent[counter]);
+        counter--;
+        //if(cpu_buffer.count==0)
         pthread_mutex_unlock(&mux_reader);
+        pthread_mutex_unlock(&mux_analyzer);
+        sem_post(&cpu_buffer.buffEmpty);
+        sem_post(&print);
     }
     return 0;
 }
-void parse_stat(struct cpustatus *c) 
-{
-    char * ptr = &raw_data[0];
-    for(int i = 0; i<5; i++)
-        {
-            sscanf(ptr,"%s %ld %ld %ld %ld %ld %ld %ld",
-            c->cpu_name,
-            &(c->cpu_user),
-            &(c->cpu_nice),
-            &(c->cpu_system),
-            &(c->cpu_idle),
-            &(c->cpu_iowait),
-            &(c->cpu_irq),
-            &(c->cpu_softirq));
-            c++;
-            while (*ptr != '\n')
-            {
-                ptr++;
-            }
-            if(i<5)
-                ptr++;
-        }
-}
+
 double calculate_load(struct cpustatus *prev, struct cpustatus *cur) 
 {
     int idle_prev = (prev->cpu_idle) + (prev->cpu_iowait);

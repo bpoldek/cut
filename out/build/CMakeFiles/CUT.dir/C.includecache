@@ -33,6 +33,8 @@ assert.h
 -
 stdbool.h
 -
+semaphore.h
+-
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 
@@ -42,6 +44,8 @@ cpu.h
 stdio.h
 -
 pthread.h
+-
+semaphore.h
 -
 stdlib.h
 -
@@ -56,6 +60,8 @@ pthread.h
 stdint.h
 -
 string.h
+-
+semaphore.h
 -
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
