@@ -5,6 +5,7 @@
         "stdio.h": "c",
         "reader.h": "c",
         "limits": "c",
-        "buffer.h": "c"
+        "buffer.h": "c",
+        "analyzer.h": "c"
     }
 }

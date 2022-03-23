@@ -6,6 +6,7 @@ void *get_raw_data(void *c)
     while(1)
     {
         sem_wait(&cpu_buffer.buffEmpty);
+        sem_wait(&fin_prt);
         pthread_mutex_lock(&mux_reader);
         struct cpustatus *cpu = (struct cpustatus*)c;
         char *ptr = &raw_data[0];
@@ -22,15 +23,17 @@ void *get_raw_data(void *c)
                 ptr = ptr + strlen(line);
                 linesum++;           
         }
-        fclose(fp);
-        
+        fclose(fp); 
+        sleep(1); 
         parse_stat(cpu);
-        sleep(1);
-        printf("reader: %d %ld, %p\n", counter, cpu_buffer.head->cpu_user, cpu_buffer.head);
+       
         cb_push_back(&cpu_buffer, cpu);
+       // printf("reader:\n");
         counter++;
         pthread_mutex_unlock(&mux_reader);
-        sem_post(&cpu_buffer.buffFull);
+        sem_post(&cpu_buffer.buffFull);  
+        sem_post(&prt_strt);
+       
     }
     return 0;
 }

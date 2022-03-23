@@ -6,27 +6,40 @@ void* cpu_calc(void *cpu)
     {   
         struct cpustatus prev;
         struct cpustatus *act = (struct cpustatus*)cpu;
+        struct cpustatus *prev_ptr = &prev;
+
 
         sem_wait(&cpu_buffer.buffFull);
         sem_wait(&fin);
-        pthread_mutex_lock(&mux_analyzer); 
         pthread_mutex_lock(&mux_reader);
-        
-       // printf("act: %ld adress: %p\n",cpu_buffer.tail->cpu_user, cpu_buffer.tail);
-        //cb_pop_front(&cpu_buffer, &prev);
-        
-        memcpy(&prev,act,sizeof(struct cpustatus));
+       // pthread_mutex_lock(&mux_analyzer);
+        for(int i = 0 ;i<5;i++)
+        {
+            memcpy(prev_ptr,act,sizeof(struct cpustatus));
+            act++;
+            prev_ptr++;
+        }
+        prev_ptr = &prev;
+
         cb_pop_front(&cpu_buffer, act);
-        //printf("prev: %ld adress: %p\n",cpu_buffer.tail->cpu_user, cpu_buffer.tail);
-        //printf("In analyzer: %d ,act: %ld prev: %ld\n", counter, act->cpu_user, prev.cpu_user );
-        percent[counter] = calculate_load(&prev, act);
-        printf("Percent %d, %lf\n",counter, percent[counter]);
+        
+        if(prev_ptr->cpu_user != act->cpu_user)
+        {
+            for (size_t i = 0; i < cpu_num_g; i++)
+            {
+                percent[i] = calculate_load(prev_ptr, act);
+               // printf("Percent %s, %lf\n",act->cpu_name, percent[i]);
+                act++;
+                prev_ptr++;
+            }
+        }
         counter--;
-        //if(cpu_buffer.count==0)
         pthread_mutex_unlock(&mux_reader);
-        pthread_mutex_unlock(&mux_analyzer);
+       // pthread_mutex_unlock(&mux_analyzer);
+        
         sem_post(&cpu_buffer.buffEmpty);
         sem_post(&print);
+        
     }
     return 0;
 }
@@ -46,6 +59,8 @@ double calculate_load(struct cpustatus *prev, struct cpustatus *cur)
     double idled = (double) idle_cur - (double) idle_prev;
 
     double cpu_perc = (1000 * (totald - idled) / totald + 1) / 10;
-
-    return cpu_perc;
+    if(cpu_perc!=0)
+        return cpu_perc;
+    else
+        return 0;
 }

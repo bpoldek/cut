@@ -9,7 +9,8 @@
 
 extern pthread_mutex_t mux_reader, mux_analyzer;
 extern char raw_data[2048];
-extern double percent[20];
+extern uint8_t cpu_num_g;
+extern double percent[16];
 extern struct circular_buffer cpu_buffer;
 extern sem_t buffEmpty,buffFull,print,fin;
 extern int counter;

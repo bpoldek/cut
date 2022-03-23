@@ -49,6 +49,8 @@ semaphore.h
 -
 stdlib.h
 -
+stdint.h
+-
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 

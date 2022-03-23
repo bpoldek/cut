@@ -21,17 +21,25 @@ void *print_status(void *cpu)
 }
 void *print_percent(void* p)
 {   
-    sem_wait(&print);
-    pthread_mutex_lock(&mux_analyzer); 
+
     while(1)
     {
-        
-        printf("CPU: %lf%%\n", percent);
+        sem_wait(&print);
+        pthread_mutex_lock(&mux_reader);
+        printf("CPU  : %lf%%\n", percent[0]);
+        for(int i=0; i<cpu_num_g-1; i++)
+        {
+            printf("CPU%d: %lf%%\n",i, percent[i]);
+        } 
+        //printf("CPU: %lf%%\n", percent);
+        sem_post(&fin);
+        sem_post(&fin_prt); 
+        pthread_mutex_unlock(&mux_reader);
         sleep(1);
 
-        //system("clear");
+        system("clear");
     }
-    pthread_mutex_unlock(&mux_analyzer);
-    sem_post(&fin); 
+
+    
     return 0;
 }

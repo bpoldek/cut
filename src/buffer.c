@@ -32,15 +32,15 @@ void cb_push_back(circular_buffer *cb, const cpustatus *item)
 {
     if(cb->count == cb->capacity){
         printf("push_back count==size\n");
-        return 0;
-
+        //return 0;
         // handle error
     }
+    cb->head = (char *)cb->buffer + (cb->sz * cb->count);
     memcpy(cb->head, item, cb->sz);
     /*if(cb->count==0)
         cb->head = (char *)cb->buffer + (cb->sz);
     else*/
-        cb->head = (char *)cb->buffer + (cb->sz * cb->count);
+    
     if(cb->head == cb->buffer_end)
         cb->head = cb->buffer;
     cb->count++;
@@ -57,9 +57,10 @@ void cb_pop_front(circular_buffer *cb, cpustatus *item)
     /*if(cb->count==cb->capacity)
         cb->tail =(char*)cb->buffer + cb->sz;
     else*/
-    cb->count--;
+    
         cb->tail =(char*)cb->buffer + (cb->sz * cb->count) ;
     if(cb->tail == cb->buffer_end)
         cb->tail = cb->buffer;
+    cb->count--;
     
 }
