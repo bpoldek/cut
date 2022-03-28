@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME} main.c)
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 find_package (Threads REQUIRED)
 
-set(COMPILE_FLAGS PRIVATE -pthread -Wall -Wextra )
+set(COMPILE_FLAGS PRIVATE -pthread -Wall -Wextra -Werror)
 
 add_compile_options(${PROJECT_NAME} ${COMPILE_FLAGS})
 target_compile_options(${PROJECT_NAME} ${COMPILE_FLAGS})

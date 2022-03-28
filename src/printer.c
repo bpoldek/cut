@@ -19,19 +19,23 @@ void *print_status(void *cpu)
     }
     return 0;
 }
-void *print_percent(void* p)
+void *print_percent(void* percent)
 {   
-
     while(1)
     {
+        double *per =  (double*) percent;
         sem_wait(&print);
         pthread_mutex_lock(&mux_reader);
-        printf("CPU  : %lf%%\n", percent[0]);
+        printf("| Core | Percent of consumption |\n");
+        printf("---------------------------------\n"); 
+        printf("| Main | %-22.2lf |\n", *per);
+        per++;
         for(int i=0; i<cpu_num_g-1; i++)
         {
-            printf("CPU%d: %lf%%\n",i, percent[i]);
-        } 
-        //printf("CPU: %lf%%\n", percent);
+            printf("| %-4d | %-22.2lf |\n",i, *per);
+            per++;
+        }
+        printf("---------------------------------\n"); 
         sem_post(&fin);
         sem_post(&fin_prt); 
         pthread_mutex_unlock(&mux_reader);
@@ -39,7 +43,5 @@ void *print_percent(void* p)
 
         system("clear");
     }
-
-    
     return 0;
 }

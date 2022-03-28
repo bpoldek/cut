@@ -4,9 +4,11 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <signal.h>
 #include "cpu.h"
 #include "buffer.h"
 
+extern volatile sig_atomic_t done;
 extern pthread_mutex_t mux_reader, mux_analyzer;
 extern char raw_data[2048];
 extern uint8_t cpu_num_g;

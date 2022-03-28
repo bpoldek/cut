@@ -4,32 +4,18 @@ unsigned sleep(unsigned sec);
 void *get_raw_data(void *c)
 {
     while(1)
-    {
+    {   
+        struct cpustatus *cpu = (struct cpustatus*)c;
         sem_wait(&cpu_buffer.buffEmpty);
         sem_wait(&fin_prt);
         pthread_mutex_lock(&mux_reader);
-        struct cpustatus *cpu = (struct cpustatus*)c;
-        char *ptr = &raw_data[0];
-        char line[80];
-        uint8_t linesum=0;
-        char *pline;
-        FILE *fp= fopen("/proc/stat", "r");
-        while(fgets(line,sizeof(line),fp))
-        {
-                pline = line;
-                if(*pline!='c')
-                    break;
-                strcpy(ptr,line);
-                ptr = ptr + strlen(line);
-                linesum++;           
-        }
-        fclose(fp); 
-        sleep(1); 
-        parse_stat(cpu);
-       
-        cb_push_back(&cpu_buffer, cpu);
-       // printf("reader:\n");
-        counter++;
+
+        char *ptr_raw_data = &raw_data[0];
+        get_lines(ptr_raw_data);                //get lines from proc/stat
+        sleep(1);                   
+        parse_stat(cpu);                        //pase raw data to cpustatus struct
+        cb_push_back(&cpu_buffer, cpu);         //push cpustatus to buffer
+        
         pthread_mutex_unlock(&mux_reader);
         sem_post(&cpu_buffer.buffFull);  
         sem_post(&prt_strt);
@@ -59,4 +45,21 @@ void parse_stat(struct cpustatus *c)
             if(i<5)
                 ptr++;
         }
+}
+void get_lines(char *raw_data)
+{    
+        char line[80];
+        uint8_t linesum=0;
+        char *pline;
+        FILE *fp= fopen("/proc/stat", "r");
+        while(fgets(line,sizeof(line),fp))
+        {
+                pline = line;
+                if(*pline!='c')
+                    break;
+                strcpy(raw_data,line);
+                raw_data = raw_data+ strlen(line);
+                linesum++;           
+        }
+        fclose(fp); 
 }

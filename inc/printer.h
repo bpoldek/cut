@@ -6,17 +6,17 @@
 #include <semaphore.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <signal.h>
 
 #include "cpu.h"
 
 unsigned sleep(unsigned sec);
-
 extern uint8_t cpu_num_g;
 extern pthread_mutex_t mux_reader, mux_analyzer;
 extern double percent[16];
 
 void *print_status(void *cpu);
-void *print_percent(void* p);
+void *print_percent(void* percent);
 
 extern sem_t print, fin, prt_strt, fin_prt;
 

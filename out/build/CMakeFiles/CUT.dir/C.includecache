@@ -13,6 +13,8 @@ pthread.h
 -
 semaphore.h
 -
+signal.h
+-
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 buffer.h
@@ -51,6 +53,8 @@ stdlib.h
 -
 stdint.h
 -
+signal.h
+-
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h
 
@@ -64,6 +68,8 @@ stdint.h
 string.h
 -
 semaphore.h
+-
+signal.h
 -
 cpu.h
 /home/bpolko/CUT/cut/inc/cpu.h

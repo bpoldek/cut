@@ -12,34 +12,28 @@ void* cpu_calc(void *cpu)
         sem_wait(&cpu_buffer.buffFull);
         sem_wait(&fin);
         pthread_mutex_lock(&mux_reader);
-       // pthread_mutex_lock(&mux_analyzer);
-        for(int i = 0 ;i<5;i++)
+
+        for(int i = 0 ;i<5;i++)                             //copy prev status
         {
             memcpy(prev_ptr,act,sizeof(struct cpustatus));
             act++;
             prev_ptr++;
         }
         prev_ptr = &prev;
-
-        cb_pop_front(&cpu_buffer, act);
-        
+        cb_pop_front(&cpu_buffer, act);                     //get act status
         if(prev_ptr->cpu_user != act->cpu_user)
         {
             for (size_t i = 0; i < cpu_num_g; i++)
             {
                 percent[i] = calculate_load(prev_ptr, act);
-               // printf("Percent %s, %lf\n",act->cpu_name, percent[i]);
                 act++;
                 prev_ptr++;
             }
         }
-        counter--;
+
         pthread_mutex_unlock(&mux_reader);
-       // pthread_mutex_unlock(&mux_analyzer);
-        
         sem_post(&cpu_buffer.buffEmpty);
         sem_post(&print);
-        
     }
     return 0;
 }
